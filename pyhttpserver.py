@@ -8,7 +8,7 @@ from flask import Flask, request
 
 
 config = {}
-config['path']={'host':'10.112.126.102', 'port':'4000', 'imgPath':'/home/quyan/PycharmProjects/PyHttpServer/', 'filePath':'/home/quyan/PycharmProjects/PyHttpServer/temp.txt'}
+config['path']={'host':'10.112.126.102', 'port':'4000', 'imgPath':'/home/quyan/PycharmProjects/PyHttpServer/', 'filePath':'/home/quyan/PycharmProjects/PyHttpServer/tmp/'}
 config['response']={
     'add_accept':{'status':'0', 'message':'add_accept'},
     'add_reject':{'status':'1', 'message':'add_reject_beacuse_of_id_exsists'},
