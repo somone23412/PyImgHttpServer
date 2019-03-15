@@ -16,7 +16,7 @@
 + response：
 
 ```json
-{"status":"0", "message": "add_accept"}
+{"status":"0", "message":"add_accept"}
 {"status":"1", "message":"add_reject_beacuse_of_id_exsists"}
 ```
 
