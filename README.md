@@ -19,8 +19,10 @@
 {"status":"0", "message":"add_accept"}
 {"status":"1", "message":"add_reject_beacuse_of_id_exsists"}
 ```
+If got other response may be the Img has not been send correctly. 
 
 ## ImgDel
+
 + url: `/imgdel`
 + method: `DELETE`
 + parameter
