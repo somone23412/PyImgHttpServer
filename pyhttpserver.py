@@ -23,11 +23,13 @@ app = Flask(__name__)
 def imgadd():
     recId = request.form.get('blackListPersonId')
     print('Id to add = ', recId)
+    recName = request.form.get('blackListPersonName')
+    print('Name to add = ', recName)
     recImg = request.files['blackListPersonImg']
     print('recImg = ', recImg)
     if not si.search(config['path']['imgPath'], recId + '.jpg'):
         recImg.save(config['path']['imgPath'] + recId + '.jpg')
-        cf.write(config['path']['filePath'], 'add', recId)
+        cf.write(config['path']['filePath'], 'add', recId, recName)
         print(config['response']['add_accept'])
         return json.dumps(config['response']['add_accept'])
     else:
@@ -40,7 +42,7 @@ def imgdel():
     recId = request.form.get('deletePersonId')
     print('Id to delete = ', recId)
     if si.search(config['path']['imgPath'], recId + '.jpg'):
-        cf.write(config['path']['filePath'], 'delete', recId)
+        cf.write(config['path']['filePath'], 'delete', recId, name="anyname")
         os.remove(config['path']['imgPath'] + recId + '.jpg')
         print(config['response']['del_accept'])
         return json.dumps(config['response']['del_accept'])

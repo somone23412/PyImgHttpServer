@@ -1,10 +1,10 @@
 import os
 
 
-def write(path, command, id):
+def write(path, command, id, name):
     for file in os.listdir(path):
-        os.rename(os.path.join(path, file), os.path.join(path, command + " " + id))
-        print(command + ' ' + id)
+        os.rename(os.path.join(path, file), os.path.join(path, command + "___" + id + '___' + name))
+        print(command + '___' + id + '___' + name)
 
 
 
