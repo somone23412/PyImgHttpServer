@@ -62,8 +62,8 @@ if __name__ == '__main__':
     config = {}
     config['http'] = {'host': '10.112.126.102', 'port': '4000'}
     config['path'] = {
-        'imgPath': '/home/quyan/PycharmProjects/PyHttpServer/',
-        'filePath': '/home/quyan/PycharmProjects/PyHttpServer/tmp/',
+        'imgPath': '/home/quyan/QtProjects/build-ubuntu_qtlx003-Desktop_Qt_5_9_3_GCC_64bit-Release/imgrc/',
+        'filePath': '/home/quyan/QtProjects/build-ubuntu_qtlx003-Desktop_Qt_5_9_3_GCC_64bit-Release/tmp/',
     }
     config['response'] = {
         'add_accept': {'status': '0', 'message': 'add_accept'},
@@ -73,9 +73,9 @@ if __name__ == '__main__':
         'del_reject': {'status': '1', 'message': 'del_reject_beacuse_of_id_not_exsists'}
     }
 
-    oa.start()
+    # oa.start()
     app.run(host=config['http']['host'], port=config['http']['port'])
-    oa.shutdown()
+    # oa.shutdown()
 
 
 
