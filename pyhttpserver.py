@@ -1,7 +1,5 @@
 # use crontab to ensure service always online
 import os
-os.environ['GLOG_minloglevel'] = '2'
-
 import searchimg as si
 import changefile as cf
 import otherapp as oa
@@ -75,15 +73,9 @@ if __name__ == '__main__':
         'del_reject': {'status': '1', 'message': 'del_reject_beacuse_of_id_not_exsists'}
     }
 
-    other_app_conf = {}
-    other_app_conf['appName'] = 'ubuntu_qtlx003'
-    other_app_conf['appWindow'] = {'windowless': 'windowless', 'window': ''}
-    other_app_conf['appGPUNum'] = 2
-    other_app_conf['path'] = {'appPath': '/home/quyan/QtProjects/build-ubuntu_qtlx003-Desktop_Qt_5_9_3_GCC_64bit-Debug/'}
-
-    oa.start(other_app_conf)
+    oa.start()
     app.run(host=config['http']['host'], port=config['http']['port'])
-    oa.shutdown(other_app_conf['appName'])
+    oa.shutdown()
 
 
 
