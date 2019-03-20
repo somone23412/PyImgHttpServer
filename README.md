@@ -17,8 +17,9 @@
 + response：
 
 ```json
-{"status":"0", "message":"add_accept"}
-{"status":"1", "message":"add_reject_beacuse_of_id_exsists"}
+{"status": "0", "message": "add_accept"}
+{"status": "1", "message": "add_reject_beacuse_of_id_exsists"}
+{"status": "1", "message": "add_reject_beacuse_of_not_a_jpg_img'"}
 ```
 
 ## ImgDel
@@ -33,6 +34,6 @@
 + response：
 
 ```json
-{"status":"0", "message":"del_accept"}
-{"status":"1", "message":"del_reject_beacuse_of_id_not_exsists"}
+{"status": "0", "message": "del_accept"}
+{"status": "1", "message": "del_reject_beacuse_of_id_not_exsists"}
 ```

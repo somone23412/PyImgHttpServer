@@ -1,57 +1,90 @@
 # use crontab to ensure service always online
+import os
+os.environ['GLOG_minloglevel'] = '2'
 
 import searchimg as si
 import changefile as cf
+import otherapp as oa
 import json
-import os
+import filetype
 from flask import Flask, request
 
-
-config = {}
-config['path']={'host':'10.112.126.102', 'port':'4000', 'imgPath':'/home/quyan/PycharmProjects/PyHttpServer/', 'filePath':'/home/quyan/PycharmProjects/PyHttpServer/tmp/'}
-config['response']={
-    'add_accept':{'status':'0', 'message':'add_accept'},
-    'add_reject':{'status':'1', 'message':'add_reject_beacuse_of_id_exsists'},
-    'del_accept':{'status':'0', 'message':'del_accept'},
-    'del_reject':{'status':'1', 'message':'del_reject_beacuse_of_id_not_exsists'}
-}
 
 app = Flask(__name__)
 
 
 @app.route('/imgadd', methods=['POST'])
 def imgadd():
+    print('/---------------------PHASE:ADD-------------------------------------------/')
+    print ('[REQUEST.FORM]', request.form)
+    print ('[REQUEST.FILES]', request.files)
+
     recId = request.form.get('blackListPersonId')
-    print('Id to add = ', recId)
     recName = request.form.get('blackListPersonName')
-    print('Name to add = ', recName)
     recImg = request.files['blackListPersonImg']
-    print('recImg = ', recImg)
+    filename = config['path']['imgPath'] + recId + '.jpg'
     if not si.search(config['path']['imgPath'], recId + '.jpg'):
-        recImg.save(config['path']['imgPath'] + recId + '.jpg')
-        cf.write(config['path']['filePath'], 'add', recId, recName)
-        print(config['response']['add_accept'])
-        return json.dumps(config['response']['add_accept'])
+        recImg.save(filename)
+        #file type
+        kind = filetype.guess(filename)
+        if (not kind is None) and (kind.extension == 'jpg'):
+            cf.write(config['path']['filePath'], 'add', recId, recName)
+            print('[RESPONSE]', config['response']['add_accept'])
+            return json.dumps(config['response']['add_accept'])
+        else:
+            os.remove(filename)
+            print('[RESPONSE]', config['response']['imgtype_reject'])
+            return json.dumps(config['response']['imgtype_reject'])
+
     else:
-        print(config['response']['add_reject'])
+        print('[RESPONSE]', config['response']['add_reject'])
         return json.dumps(config['response']['add_reject'])
+
 
 
 @app.route('/imgdel', methods=['DELETE'])
 def imgdel():
+    print('/---------------------PHASE:DEL-------------------------------------------/')
+    print ("[REQUEST.FORM]", request.form)
+
     recId = request.form.get('deletePersonId')
-    print('Id to delete = ', recId)
+    filename = config['path']['imgPath'] + recId + '.jpg'
     if si.search(config['path']['imgPath'], recId + '.jpg'):
         cf.write(config['path']['filePath'], 'delete', recId, name="anyname")
-        os.remove(config['path']['imgPath'] + recId + '.jpg')
-        print(config['response']['del_accept'])
+        os.remove(filename)
+        print('[RESPONSE]', config['response']['del_accept'])
         return json.dumps(config['response']['del_accept'])
     else:
-        print(config['response']['del_reject'])
+        print('[RESPONSE]', config['response']['del_reject'])
         return json.dumps(config['response']['del_reject'])
 
 
 if __name__ == '__main__':
-    app.run(host=config['path']['host'], port=config['path']['port'])
+
+    config = {}
+    config['http'] = {'host': '10.112.126.102', 'port': '4000'}
+    config['path'] = {
+        'imgPath': '/home/quyan/PycharmProjects/PyHttpServer/',
+        'filePath': '/home/quyan/PycharmProjects/PyHttpServer/tmp/',
+    }
+    config['response'] = {
+        'add_accept': {'status': '0', 'message': 'add_accept'},
+        'add_reject': {'status': '1', 'message': 'add_reject_beacuse_of_id_exsists'},
+        'imgtype_reject': {'status': '1', 'message': 'add_reject_beacuse_of_not_a_jpg_img'},
+        'del_accept': {'status': '0', 'message': 'del_accept'},
+        'del_reject': {'status': '1', 'message': 'del_reject_beacuse_of_id_not_exsists'}
+    }
+
+    other_app_conf = {}
+    other_app_conf['appName'] = 'ubuntu_qtlx003'
+    other_app_conf['appWindow'] = {'windowless': 'windowless', 'window': ''}
+    other_app_conf['appGPUNum'] = 2
+    other_app_conf['path'] = {'appPath': '/home/quyan/QtProjects/build-ubuntu_qtlx003-Desktop_Qt_5_9_3_GCC_64bit-Debug/'}
+
+    oa.start(other_app_conf)
+    app.run(host=config['http']['host'], port=config['http']['port'])
+    oa.shutdown(other_app_conf['appName'])
+
+
 
 
