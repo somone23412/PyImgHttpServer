@@ -1,8 +1,10 @@
 # use crontab to ensure service always online
 import os
+import sys
 import searchimg as si
 import changefile as cf
 import otherapp as oa
+import getip as gi
 import json
 import filetype
 from flask import Flask, request
@@ -62,8 +64,8 @@ if __name__ == '__main__':
     config = {}
     config['http'] = {'host': '10.112.126.102', 'port': '4000'}
     config['path'] = {
-        'imgPath': '/home/quyan/QtProjects/build-ubuntu_qtlx003-Desktop_Qt_5_9_3_GCC_64bit-Release/imgrc/',
-        'filePath': '/home/quyan/QtProjects/build-ubuntu_qtlx003-Desktop_Qt_5_9_3_GCC_64bit-Release/tmp/',
+        'imgPath': './imgrc/',
+        'filePath': './tmp/',
     }
     config['response'] = {
         'add_accept': {'status': '0', 'message': 'add_accept'},
@@ -73,9 +75,12 @@ if __name__ == '__main__':
         'del_reject': {'status': '1', 'message': 'del_reject_beacuse_of_id_not_exsists'}
     }
 
-    # oa.start()
-    app.run(host=config['http']['host'], port=config['http']['port'])
-    # oa.shutdown()
+    currentpath = os.getcwd()
+    sys.path.append(currentpath + '/lib')
+    oa.start(windowless=True)
+    host = gi.get_host_ip()
+    app.run(host=host, port=config['http']['port'])
+    oa.shutdown()
 
 
 
