@@ -4,6 +4,7 @@ import sys
 import searchimg as si
 import changefile as cf
 import otherapp as oa
+import namelist as nl
 import getip as gi
 import json
 import filetype
@@ -22,13 +23,15 @@ def imgadd():
     recId = request.form.get('blackListPersonId')
     recName = request.form.get('blackListPersonName')
     recImg = request.files['blackListPersonImg']
-    filename = config['path']['imgPath'] + recId + '.jpg'
-    if not si.search(config['path']['imgPath'], recId + '.jpg'):
+    newId = recId + '(' + recName + ')'
+    filename = config['path']['imgPath'] + newId + '.jpg'
+    if not si.search(config['path']['imgPath'], newId + '.jpg'):
         recImg.save(filename)
         #file type
         kind = filetype.guess(filename)
         if (not kind is None) and (kind.extension == 'jpg'):
-            cf.write(config['path']['filePath'], 'add', recId, recName)
+            nl.insert(config['path']['record'], recId, recName  )
+            cf.write(config['path']['filePath'], 'add', newId)
             print('[RESPONSE]', config['response']['add_accept'])
             return json.dumps(config['response']['add_accept'])
         else:
@@ -48,9 +51,11 @@ def imgdel():
     print ("[REQUEST.FORM]", request.form)
 
     recId = request.form.get('deletePersonId')
-    filename = config['path']['imgPath'] + recId + '.jpg'
-    if si.search(config['path']['imgPath'], recId + '.jpg'):
-        cf.write(config['path']['filePath'], 'delete', recId, name="anyname")
+    recName = nl.delete(config['path']['record'], recId)
+    newId = recId + '(' + recName + ')'
+    filename = config['path']['imgPath'] + newId + '.jpg'
+    if si.search(config['path']['imgPath'], newId + '.jpg'):
+        cf.write(config['path']['filePath'], 'delete', newId)
         os.remove(filename)
         print('[RESPONSE]', config['response']['del_accept'])
         return json.dumps(config['response']['del_accept'])
@@ -66,6 +71,7 @@ if __name__ == '__main__':
     config['path'] = {
         'imgPath': './imgrc/',
         'filePath': './tmp/',
+        'record':'./record.json'
     }
     config['response'] = {
         'add_accept': {'status': '0', 'message': 'add_accept'},
@@ -77,10 +83,10 @@ if __name__ == '__main__':
 
     currentpath = os.getcwd()
     sys.path.append(currentpath + '/lib')
-    oa.start(windowless=True)
+    # oa.start(windowless=True)
     host = gi.get_host_ip()
     app.run(host=host, port=config['http']['port'])
-    oa.shutdown()
+    # oa.shutdown()
 
 
 
