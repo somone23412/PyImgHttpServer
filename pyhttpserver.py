@@ -86,10 +86,10 @@ if __name__ == '__main__':
 
     currentpath = os.getcwd()
     sys.path.append(currentpath + '/lib')
-#    oa.start(windowless=True)
+    oa.start(windowless=False)
     host = gi.get_host_ip()
     app.run(host=host, port=config['http']['port'])
-#    oa.shutdown()
+    oa.shutdown()
 
 
 
