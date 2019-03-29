@@ -70,7 +70,7 @@ def imgdel():
 if __name__ == '__main__':
 
     config = {}
-    config['http'] = {'host': '10.112.126.102', 'port': '4000'}
+    config['port'] = '4000'
     config['path'] = {
         'imgPath': './imgrc/',
         'filePath': './tmp/',
@@ -85,10 +85,9 @@ if __name__ == '__main__':
     }
 
     currentpath = os.getcwd()
-    sys.path.append(currentpath + '/lib')
-    oa.start(windowless=False)
+    oa.start(windowless=True)
     host = gi.get_host_ip()
-    app.run(host=host, port=config['http']['port'])
+    app.run(host=host, port=config['port'])
     oa.shutdown()
 
 
