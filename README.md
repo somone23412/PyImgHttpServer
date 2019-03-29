@@ -2,6 +2,12 @@
 
 ~~`use crontab to ensure service always online`~~
 
++ To run this project:
+
+```shell
+source run.sh
+```
+
 ## ImgAdd
 
 + url: `/imgadd`
