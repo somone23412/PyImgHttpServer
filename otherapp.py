@@ -8,15 +8,21 @@ other_app_conf['appGPUNum'] = 2
 other_app_conf['path'] = {
     'appPath':'./',
 }
-
+other_app_conf['video_nums'] = 2
+# (configId, gpuId)
+config = {}
+config['0'] = '0'
+config['1'] = '0'
+config['2'] = '1'
+config['3'] = '1'
 
 def start(windowless):
-        for i in range(other_app_conf['appGPUNum']):
+        for key in config.keys():
             cmd = other_app_conf['path']['appPath'] + other_app_conf['appName']
             if windowless:
-                cmd = cmd + ' -windowless' + ' -gpu ' + str(i) + ' &'
+                cmd = cmd + ' -windowless' + ' -gpu ' + config[key] + ' -config ' + key + ' &'
             else:
-                cmd = cmd + ' -window' + ' &'
+                cmd = cmd + ' -config ' + key + ' &'
             os.system(cmd)
 
 

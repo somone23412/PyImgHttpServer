@@ -20,6 +20,9 @@ source run.sh
 | blackListPersonName | 入库名 |
 | blackListPersonImg |  入库图片，**jpg**格式|
 
++ black list : Id end as "_1"
+white list : Id end as "_0" 
+
 + response：
 
 ```json
