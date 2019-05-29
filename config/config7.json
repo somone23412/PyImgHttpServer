@@ -1,0 +1,39 @@
+{
+    "test":true,
+    "test_stream":[
+                      "rtsp://admin:bei12345@192.168.5.228:554/LiveMedia/ch1/Media1/",
+                      "rtsp://admin:bei12345@192.168.5.221:554/LiveMedia/ch1/Media1/",
+                      "rtsp://admin:bei12345@192.168.5.222:554/LiveMedia/ch1/Media1/",
+                      "rtsp://admin:bei12345@192.168.5.223:554/LiveMedia/ch1/Media1/",
+                      "rtsp://admin:bei12345@192.168.5.224:554/LiveMedia/ch1/Media1/",
+                      "rtsp://admin:bei12345@192.168.5.225:554/LiveMedia/ch1/Media1/",
+                      "rtsp://admin:bei12345@192.168.5.226:554/LiveMedia/ch1/Media1/",
+                      "rtsp://admin:bei12345@192.168.5.227:554/LiveMedia/ch1/Media1/",
+                      "rtsp://admin:bei12345@192.168.5.229:554/LiveMedia/ch1/Media1/",
+                      "rtsp://admin:bei12345@192.168.5.230:554/LiveMedia/ch1/Media1/",
+                      "rtsp://admin:admin@192.168.5.11:554/LiveMedia/ch1/Media1/",
+                      "rtsp://admin:admin@192.168.3.40//Streaming/Channels/1",
+                      "./part10/20180910%5d.jpg", 
+                      "./part3.2/20180831%5d.jpg", 
+                      "./part2/20180831%5d.jpg"
+    ],
+    "test_stream_other":{
+        "xue shi san lu":"rtsp://admin:bei12345@192.168.5.223:554/LiveMedia/ch1/Media1/"
+    },
+    "cam_code":"07100290000000000101#195460fb5cb2409c8592145ab5900aa1",
+    "cam_url":"http://182.168.2.201:9123/vcn/rtsp/195460fb5cb2409c8592145ab5900aa1/07100290000000000101%23195460fb5cb2409c8592145ab5900aa1?packProtocolType=1&clientType=1&videoDecType=1&audioDecType=1",
+    "post_ip":"http://192.168.2.201:9123",
+    "get_ip":"http://192.168.2.201:9123",
+    "send_ip":"http://192.168.2.201:9123/event/face/recognized",
+    "MDP":39,
+    "MRP":5,
+    "SC":50,
+    "DCLT":2,
+    "ACT":0.55,
+    "MinSim":0.30,
+    "QDelay":8,
+    "home_path":"./",
+    "watch_path":"./tmp/"
+}
+
+

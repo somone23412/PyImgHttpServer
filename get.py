@@ -6,7 +6,7 @@ urlGetCamera = url+'/vcn/cameras'
 
 response = requests.get(urlGetCamera)
 response
-
+print(response.text)
 camerainfo = []
 for cminfo in json.loads(response.text)['cameras']:
     camerainfo.append(cminfo)
