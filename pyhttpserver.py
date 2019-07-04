@@ -85,7 +85,8 @@ if __name__ == '__main__':
     }
 
     currentpath = os.getcwd()
-    oa.start(windowless=True)
+    oa.start(windowless=False)
+    os.system('python3 protectprocess.py --process_num 2 &')
     host = gi.get_host_ip()
     app.run(host=host, port=config['port'])
     oa.shutdown()
