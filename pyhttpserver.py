@@ -9,6 +9,7 @@ import getip as gi
 import json
 import filetype
 from flask import Flask, request
+import redis
 
 
 app = Flask(__name__)
@@ -23,14 +24,15 @@ def imgadd():
     recId = request.form.get('blackListPersonId')
     recName = request.form.get('blackListPersonName')
     recImg = request.files['blackListPersonImg']
-    newId = recId + '(' + recName + ')'
+    print(recImg)
+    newId = recId
     filename = config['path']['imgPath'] + newId + '.jpg'
     if not si.search(config['path']['imgPath'], newId + '.jpg'):
         recImg.save(filename)
         #file type
         kind = filetype.guess(filename)
         if (not kind is None) and (kind.extension == 'jpg'):
-            nl.insert(config['path']['record'], recId, recName  )
+            nl.insert(config['path']['record'], config['path']['imgPath'], recId, recName, redis_client)
             cf.write(config['path']['filePath'], 'add', newId)
             print('[RESPONSE]', config['response']['add_accept'])
             return json.dumps(config['response']['add_accept'])
@@ -51,11 +53,11 @@ def imgdel():
     print ("[REQUEST.FORM]", request.form)
 
     recId = request.form.get('deletePersonId')
-    recName = nl.delete(config['path']['record'], recId)
+    recName = nl.delete(config['path']['record'], recId, redis_client)
     if recName is None:
         print('[RESPONSE]', config['response']['del_reject'])
         return json.dumps(config['response']['del_reject'])
-    newId = recId + '(' + recName + ')'
+    newId = recId
     filename = config['path']['imgPath'] + newId + '.jpg'
     if si.search(config['path']['imgPath'], newId + '.jpg'):
         cf.write(config['path']['filePath'], 'delete', newId)
@@ -83,13 +85,17 @@ if __name__ == '__main__':
         'del_accept': {'status': '0', 'message': 'del_accept'},
         'del_reject': {'status': '1', 'message': 'del_reject_beacuse_of_id_not_exsists'}
     }
+    
+    
 
     currentpath = os.getcwd()
-    oa.start(windowless=False)
-    os.system('python3 protectprocess.py --process_num 2 &')
-    host = gi.get_host_ip()
+    # oa.start(windowless=True)
+    # os.system('python3 protectprocess.py --process_num 2 &')
+    # host = gi.get_host_ip()
+    host = '172.27.218.163'
+    redis_client = redis.Redis(host='192.168.2.217', password='redistrans', port=8379)
     app.run(host=host, port=config['port'])
-    oa.shutdown()
+    # oa.shutdown()
 
 
 

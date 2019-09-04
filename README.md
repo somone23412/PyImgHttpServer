@@ -22,7 +22,7 @@ source run.sh
 
 + black list : Id end as "_1"
 white list : Id end as "_0" 
-
+red list : Id end as "_2"
 + response：
 
 ```json
